@@ -1,16 +1,16 @@
-# Welcome to Adrien9631 space
-
-这里是Adrien9631的个人博客。
-
-## Golang内存模型
-
-### Golang内存模型是什么？
+---
+layout: post
+title:  "Golang Memory Model"
+date:   2021-08-29 16:12:53 +0800
+categories: golang server
+---
+## Golang内存模型是什么？
 
 提到内存模型，一般直觉上会和运行时的内存分配关联起来，但其实这两者并不是同一个东西，内存模型定义的是语言在运行时，多线程（在Golang中是协程）对于内存的读写操作行为，并描述了这些行为产生的现象。Golang的内存模型主要描述的就是Goroutine之间能够读到对方写操作的条件。
 
 （比较有意思的是，Golang官网的memory model文章作者似乎并不希望读者来看，他认为如果读者需要通过memory model才能理解程序的运行方式是不合理的）
 
-### Happens-Before 关系
+## Happens-Before 关系
 
 在单个Goroutine中，程序的运行结果是符合程序定义的读写操作顺序的。但实际在不影响运行结果的前提下，编译器和处理器都可能对程序中的读写指令进行重排序。这导致了，当你想要用一个Goroutine去观测另一个Goroutine的运行时，结果可能会和程序定义的不同。
 
@@ -44,9 +44,8 @@ Tips：
 
 2. 针对超过一个寄存器长度的数据读写，会分为多次无序的操作完成。
 
-### 协程同步
+## 协程同步
 
 Golang的初始化动作是由一个routine完成的，被引用包的初始化会先于引用包的初始化，main函数会在所有init函数执行完成后被运行。
 
 如果在init()函数中创建了一个新的routine，它会和执行初始化动作的routine并发运行。
-
